@@ -8,7 +8,4 @@ function send(url, data) {
   const encryptedData = encrypt(data);
 }
 
-module.exports = {
-  send,
-  TIMEOUT,
-};
+export { send, TIMEOUT };

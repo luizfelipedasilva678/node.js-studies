@@ -1,5 +1,5 @@
-const { send, TIMEOUT } = require("./request");
-const { read } = require("./response");
+import { TIMEOUT, send } from "./request.mjs";
+import { read } from "./response.mjs";
 
 function request(url, data) {
   send(url, data);
