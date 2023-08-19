@@ -1,4 +1,4 @@
-const { send } = require("./request");
+const { send, TIMEOUT } = require("./request");
 const { read } = require("./response");
 
 function request(url, data) {
@@ -7,3 +7,4 @@ function request(url, data) {
 }
 
 console.log(request("www.google.com", "data"));
+console.log(TIMEOUT);
