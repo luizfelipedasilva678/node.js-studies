@@ -1,15 +1,28 @@
 const http = require("http");
 
+const friends = [
+  {
+    id: 1,
+    name: "John",
+  },
+  {
+    id: 2,
+    name: "Maria",
+  },
+];
+
 const server = http.createServer((req, res) => {
-  if (req.url === "/friends") {
+  if (new RegExp(/\/friends\/?\d*/, "g").test(req.url)) {
+    const match = req.url.match(new RegExp(/\/friends\/\d+/, "g"));
+    const id = match ? match[0].split("/")[2] : undefined;
+    const responseValue = id
+      ? friends.filter((friend) => friend.id === Number(id))
+      : friends;
+
     res.writeHead(200, {
       "Content-Type": "application/json",
     });
-    res.end(
-      JSON.stringify({
-        name: "Pedro",
-      })
-    );
+    res.end(JSON.stringify(responseValue));
   } else if (req.url === "/messages") {
     res.writeHead(200, {
       "Content-Type": "text/html",
