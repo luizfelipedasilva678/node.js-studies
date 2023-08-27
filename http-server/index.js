@@ -7,11 +7,12 @@ const getData = (req, res) => {
     req.on("data", (chunk) => {
       obj += chunk.toString();
     });
-    req.pipe(res);
 
     req.on("end", () => {
       resolve(obj);
     });
+
+    req.pipe(res);
   });
 };
 
