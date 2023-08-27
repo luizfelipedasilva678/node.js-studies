@@ -7,6 +7,7 @@ const getData = (req, res) => {
     req.on("data", (chunk) => {
       obj += chunk.toString();
     });
+    req.pipe(res);
 
     req.on("end", () => {
       resolve(obj);
@@ -38,15 +39,16 @@ const friends = [
 ];
 
 const server = http.createServer(async (req, res) => {
-  if (req.method === "POST" && new RegExp(/\/friends\/?/, "g").test(req.url)) {
+  if (
+    req.method === "POST" &&
+    new RegExp(/\/friends\/?\d*/, "g").test(req.url)
+  ) {
     const data = await getData(req, res);
     const lastId = getLastId(friends);
     friends.push({
       id: lastId + 1,
       ...JSON.parse(data),
     });
-
-    console.log(friends);
   }
 
   if (req.method === "GET") {
