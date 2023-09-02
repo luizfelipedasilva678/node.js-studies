@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
-const messagesController = require("./controllers/messages.controller");
-const friendsController = require("./controllers/friends.controller");
+const messagesRouter = require("./routes/messages.router");
+const friendsRouter = require("./routes/friends.router");
 const PORT = 3000;
 
 app.use((req, res, next) => {
@@ -12,13 +12,8 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
-
-app.post("/friends", friendsController.createFriend);
-app.get("/friends", friendsController.getFriends);
-app.get("/friends/:friendId", friendsController.getFriend);
-
-app.get("/messages", messagesController.getMessages);
-app.post("/messages", messagesController.postMessages);
+app.use("/friends", friendsRouter);
+app.use("/messages", messagesRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
