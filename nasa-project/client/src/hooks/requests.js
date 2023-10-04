@@ -14,19 +14,31 @@ async function httpGetLaunches() {
 }
 
 async function httpSubmitLaunch(launch) {
-  return await fetch(`${API_URL}/launches`, {
-    method: "POST",
-    body: JSON.stringify(launch),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    return await fetch(`${API_URL}/launches`, {
+      method: "POST",
+      body: JSON.stringify(launch),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (err) {
+    return {
+      ok: false,
+    };
+  }
 }
 
 async function httpAbortLaunch(id) {
-  return await fetch(`${API_URL}/launches/${id}`, {
-    method: "DELETE",
-  });
+  try {
+    return await fetch(`${API_URL}/launches/${id}`, {
+      method: "DELETE",
+    });
+  } catch (err) {
+    return {
+      ok: false,
+    };
+  }
 }
 
 export { httpGetPlanets, httpGetLaunches, httpSubmitLaunch, httpAbortLaunch };
