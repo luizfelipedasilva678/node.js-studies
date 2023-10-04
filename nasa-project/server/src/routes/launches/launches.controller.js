@@ -30,7 +30,14 @@ function addNewLaunch(req, res) {
   return res.status(201).json(launch);
 }
 
+function deleteLaunch(req, res) {
+  const { flightNumber } = req.params;
+  const launch = launchesModel.deleteLaunch(Number(flightNumber));
+  return res.status(200).json(launch);
+}
+
 module.exports = {
   getAllLaunches,
   addNewLaunch,
+  deleteLaunch,
 };
