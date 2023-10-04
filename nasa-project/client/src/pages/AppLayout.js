@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useLocation } from "react-router-dom";
 import { Frame, withSounds, withStyles } from "arwes";
 
 import usePlanets from "../hooks/usePlanets";
@@ -29,6 +29,7 @@ const styles = () => ({
 
 const AppLayout = (props) => {
   const { sounds, classes } = props;
+  const { pathname } = useLocation();
 
   const [frameVisible, setFrameVisible] = useState(true);
   const animateFrame = () => {
@@ -45,10 +46,9 @@ const AppLayout = (props) => {
   const { launches, isPendingLaunch, submitLaunch, abortLaunch } = useLaunches(
     onSuccessSound,
     onAbortSound,
-    onFailureSound
+    onFailureSound,
+    pathname
   );
-
-  console.log(launches);
 
   const planets = usePlanets();
 

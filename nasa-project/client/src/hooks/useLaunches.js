@@ -2,14 +2,18 @@ import { useCallback, useEffect, useState } from "react";
 
 import { httpGetLaunches, httpSubmitLaunch, httpAbortLaunch } from "./requests";
 
-function useLaunches(onSuccessSound, onAbortSound, onFailureSound) {
+const UPCOMING_PATHNAME = "/upcoming";
+
+function useLaunches(onSuccessSound, onAbortSound, onFailureSound, pathname) {
   const [launches, saveLaunches] = useState([]);
   const [isPendingLaunch, setPendingLaunch] = useState(false);
 
   const getLaunches = useCallback(async () => {
-    const fetchedLaunches = await httpGetLaunches();
-    saveLaunches(fetchedLaunches);
-  }, []);
+    if (pathname === UPCOMING_PATHNAME) {
+      const fetchedLaunches = await httpGetLaunches();
+      saveLaunches(fetchedLaunches);
+    }
+  }, [pathname]);
 
   useEffect(() => {
     getLaunches();
@@ -23,12 +27,12 @@ function useLaunches(onSuccessSound, onAbortSound, onFailureSound) {
       const launchDate = new Date(data.get("launch-day"));
       const mission = data.get("mission-name");
       const rocket = data.get("rocket-name");
-      const target = data.get("planets-selector");
+      const destination = data.get("planets-selector");
       const response = await httpSubmitLaunch({
         launchDate,
         mission,
         rocket,
-        target,
+        destination,
       });
 
       // TODO: Set success based on response.
