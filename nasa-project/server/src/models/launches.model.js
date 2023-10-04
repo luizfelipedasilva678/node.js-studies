@@ -33,6 +33,7 @@ function addNewLaunch(launch) {
 }
 
 function deleteLaunch(flightNumber) {
+  const launch = launches.get(flightNumber);
   launches.delete(flightNumber);
   return launch;
 }

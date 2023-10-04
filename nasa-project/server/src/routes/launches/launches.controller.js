@@ -33,6 +33,12 @@ function addNewLaunch(req, res) {
 function deleteLaunch(req, res) {
   const { flightNumber } = req.params;
   const launch = launchesModel.deleteLaunch(Number(flightNumber));
+
+  if (!launch)
+    return res.status(404).json({
+      error: "Launch not found",
+    });
+
   return res.status(200).json(launch);
 }
 
