@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "npm run build --prefix client && PORT=8000 npm start --prefix server"
+    "deploy": "npm run build --prefix client && PORT=8000 npm start --prefix server",
+    "deploy-cluster": "npm run build --prefix client && PORT=5000 npm run cluster --prefix server"
   },
   "keywords": [],
   "author": "",
