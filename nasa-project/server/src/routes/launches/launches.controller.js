@@ -30,9 +30,9 @@ function addNewLaunch(req, res) {
   return res.status(201).json(launch);
 }
 
-function deleteLaunch(req, res) {
+function abortLaunch(req, res) {
   const { flightNumber } = req.params;
-  const launch = launchesModel.deleteLaunch(Number(flightNumber));
+  const launch = launchesModel.abortLaunch(Number(flightNumber));
 
   if (!launch)
     return res.status(404).json({
@@ -45,5 +45,5 @@ function deleteLaunch(req, res) {
 module.exports = {
   getAllLaunches,
   addNewLaunch,
-  deleteLaunch,
+  abortLaunch,
 };

@@ -32,9 +32,10 @@ function addNewLaunch(launch) {
   );
 }
 
-function deleteLaunch(flightNumber) {
+function abortLaunch(flightNumber) {
   const launch = launches.get(flightNumber);
-  launches.delete(flightNumber);
+  launch.upcoming = false;
+  launch.success = false;
   return launch;
 }
 
@@ -42,5 +43,5 @@ module.exports = {
   launches,
   getAllLaunches,
   addNewLaunch,
-  deleteLaunch,
+  abortLaunch,
 };
