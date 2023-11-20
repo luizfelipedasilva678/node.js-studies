@@ -40,7 +40,7 @@ const loadPlanetsData = () => {
 };
 
 async function getAllPlanets() {
-  return await planets.find({});
+  return await planets.find({}, "kepler_name -_id");
 }
 
 async function savePlanet(planet) {
