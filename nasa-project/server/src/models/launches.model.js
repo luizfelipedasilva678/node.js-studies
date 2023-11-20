@@ -1,44 +1,40 @@
-//const launches = require("./launches.mongo");
+const launches = require("./launches.mongo");
 
-const launches = new Map();
-
-let lastestFlightNumber = 100;
-
-const launch = {
-  flightNumber: 100,
-  mission: "Kepler Exploration X",
-  rocket: "Explorer IS1",
-  lauchDate: new Date("December 27, 2030"),
-  destination: "Kepler-442 b",
-  customer: ["ZTM", "Nasa"],
-  upcoming: true,
-  success: true,
-};
-
-launches.set(launch.flightNumber, launch);
-
-function getAllLaunches() {
-  return Array.from(launches.values());
+async function getAllLaunches() {
+  try {
+    return await launches.find({});
+  } catch (e) {
+    console.log("Error on getting all launches");
+  }
 }
 
-function addNewLaunch(launch) {
-  lastestFlightNumber++;
-  launches.set(
-    lastestFlightNumber,
+async function addNewLaunch(launch) {
+  try {
     Object.assign(launch, {
       success: true,
       upcoming: true,
       customer: ["ZTM", "Nasa"],
-      flightNumber: lastestFlightNumber,
-    })
-  );
+      flightNumber: (await getAllLaunches()).length + 1,
+    });
+
+    return await launches.create(launch);
+  } catch (error) {
+    console.log(`Error adding new launch ${error}`);
+  }
 }
 
-function abortLaunch(flightNumber) {
-  const launch = launches.get(flightNumber);
-  launch.upcoming = false;
-  launch.success = false;
-  return launch;
+async function abortLaunch(flightNumber) {
+  try {
+    return launches.findOneAndUpdate(
+      { flightNumber },
+      {
+        upcoming: false,
+        success: false,
+      }
+    );
+  } catch (error) {
+    console.log(`Error abort new launch ${error}`);
+  }
 }
 
 module.exports = {
