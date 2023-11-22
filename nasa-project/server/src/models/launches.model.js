@@ -1,10 +1,12 @@
 const launches = require("./launches.mongo");
 
+const DEFAULT_LATEST_LAUNCH = 100;
+
 async function getAllLaunches() {
   try {
     return await launches.find({});
   } catch (e) {
-    console.log("Error on getting all launches");
+    throw new Error("Error on getting all launches");
   }
 }
 
@@ -14,13 +16,23 @@ async function addNewLaunch(launch) {
       success: true,
       upcoming: true,
       customer: ["ZTM", "Nasa"],
-      flightNumber: (await getAllLaunches()).length + 1,
+      flightNumber: (await getLatestLaunch()) + 1,
     });
 
     return await launches.create(launch);
   } catch (error) {
-    console.log(`Error adding new launch ${error}`);
+    throw new Error("Error on adding launch ");
   }
+}
+
+async function getLatestLaunch() {
+  const latestLaunch = await launches.findOne({}).sort("-flightNumber");
+
+  if (!latestLaunch) {
+    return DEFAULT_LATEST_LAUNCH;
+  }
+
+  return latestLaunch.flightNumber;
 }
 
 async function abortLaunch(flightNumber) {
@@ -33,7 +45,7 @@ async function abortLaunch(flightNumber) {
       }
     );
   } catch (error) {
-    console.log(`Error abort new launch ${error}`);
+    throw new Error(`Error abort launch`);
   }
 }
 

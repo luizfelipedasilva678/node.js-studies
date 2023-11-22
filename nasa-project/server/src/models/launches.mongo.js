@@ -17,7 +17,10 @@ const launchesSchema = Schema({
     type: String,
     required: true,
   },
-  lauchDate: Date,
+  launchDate: {
+    required: true,
+    type: Date,
+  },
   customer: [String],
   upcoming: {
     type: Boolean,
