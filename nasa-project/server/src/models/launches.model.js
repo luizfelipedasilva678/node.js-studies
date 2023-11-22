@@ -50,7 +50,6 @@ async function abortLaunch(flightNumber) {
 }
 
 module.exports = {
-  launches,
   getAllLaunches,
   addNewLaunch,
   abortLaunch,

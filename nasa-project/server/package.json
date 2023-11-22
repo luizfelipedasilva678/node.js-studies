@@ -4,14 +4,17 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "test": "jest",
-    "test-watch": "jest --watch",
+    "test": "jest --detectOpenHandles --setupFiles dotenv/config",
+    "test-watch": "jest --watch --detectOpenHandles --setupFiles dotenv/config",
     "start": "PORT=5000 node src/server.js",
     "watch": "PORT=5000 nodemon src/server.js",
     "cluster": "PORT=5000 npx pm2 start src/server.js -i max"
   },
   "keywords": [],
   "author": "",
+  "jest": {
+    "testEnvironment": "node"
+  },
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",

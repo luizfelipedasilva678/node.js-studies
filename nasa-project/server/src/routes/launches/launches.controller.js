@@ -42,10 +42,10 @@ function addNewLaunch(req, res) {
   }
 }
 
-function abortLaunch(req, res) {
+async function abortLaunch(req, res) {
   try {
     const { flightNumber } = req.params;
-    const launch = launchesModel.abortLaunch(Number(flightNumber));
+    const launch = await launchesModel.abortLaunch(Number(flightNumber));
 
     if (!launch)
       return res.status(404).json({
