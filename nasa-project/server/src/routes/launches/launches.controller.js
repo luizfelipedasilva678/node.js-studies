@@ -1,8 +1,12 @@
 const launchesModel = require("../../models/launches.model");
+const { getPagination } = require("../../services/query");
 
 async function getAllLaunches(req, res) {
   try {
-    return res.status(200).json(await launchesModel.getAllLaunches());
+    const { limit, skip } = getPagination(req.query);
+    return res
+      .status(200)
+      .json(await launchesModel.getAllLaunches(skip, limit));
   } catch (err) {
     return res.status(500).json({
       error: err.message,

@@ -67,9 +67,9 @@ async function findLaunch(filter) {
   return await launches.findOne(filter);
 }
 
-async function getAllLaunches() {
+async function getAllLaunches(skip, limit) {
   try {
-    return await launches.find({});
+    return await launches.find({}).skip(skip).limit(limit);
   } catch (e) {
     throw new Error("Error on getting all launches");
   }
