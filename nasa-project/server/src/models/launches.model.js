@@ -69,7 +69,13 @@ async function findLaunch(filter) {
 
 async function getAllLaunches(skip, limit) {
   try {
-    return await launches.find({}).skip(skip).limit(limit);
+    return await launches
+      .find({})
+      .sort({
+        flightNumber: 1,
+      })
+      .skip(skip)
+      .limit(limit);
   } catch (e) {
     throw new Error("Error on getting all launches");
   }
