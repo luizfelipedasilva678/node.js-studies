@@ -15,7 +15,6 @@ const launchesSchema = Schema({
   },
   destination: {
     type: String,
-    required: true,
   },
   launchDate: {
     required: true,
