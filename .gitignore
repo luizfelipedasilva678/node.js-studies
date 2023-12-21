@@ -130,3 +130,4 @@ dist
 .pnp.*
 big.file
 *.jpg
+*.pem
