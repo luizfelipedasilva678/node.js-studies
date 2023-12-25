@@ -8,7 +8,7 @@ celebrity.on("race", (result) => {
 });
 
 process.on("exit", (code) => {
-  console.log("Exiting " + code);
+  console.log("Exiting  " + code);
 });
 
 celebrity.emit("race", "win");
