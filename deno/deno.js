@@ -6,3 +6,9 @@ if (food === "love" && parent === "ryan") {
 } else {
   console.log("🥚...this egg needs some love");
 }
+
+setTimeout(() => {
+  console.log("check");
+}, 1000);
+
+console.table(Deno.metrics());
