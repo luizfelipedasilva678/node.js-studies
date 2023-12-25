@@ -175,12 +175,19 @@ function startGame() {
   canvas.addEventListener("mousemove", (e) => {
     playerMoved = true;
     paddleX[paddleIndex] = e.offsetX;
+
     if (paddleX[paddleIndex] < 0) {
       paddleX[paddleIndex] = 0;
     }
+
     if (paddleX[paddleIndex] > width - paddleWidth) {
       paddleX[paddleIndex] = width - paddleWidth;
     }
+
+    socket.emit("paddleMove", {
+      xPosition: paddleX[paddleIndex],
+    });
+
     // Hide Cursor
     canvas.style.cursor = "none";
   });
@@ -198,4 +205,9 @@ socket.on("startGame", (refereeId) => {
 
   isReferee = socket.id === refereeId;
   startGame();
+});
+
+socket.on("paddleMove", (paddleData) => {
+  const opponentPaddleIndex = 1 - paddleIndex;
+  paddleX[opponentPaddleIndex] = paddleData.xPosition;
 });
